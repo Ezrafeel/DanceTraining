@@ -11,9 +11,97 @@
 	background-image: url(3.gif);
 	background-repeat: no-repeat;
 	background-size: cover;
+
+		#cookieConsent {
+            display: none;
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f1f1f1;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #memberNameRestriction {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #memberNameRestriction form {
+            margin-top: 50px;
+        }
 	
 }
 </style>
+<body>
+	<div id="cookieConsent">
+        <p>This website uses cookies to ensure you get the best experience on our website.</p>
+        <button onclick="acceptCookies()">I agree</button>
+    </div>
+
+
+    <div id="memberNameRestriction">
+        <h2>Member Name Restriction</h2>
+        <p>Please enter your member name to access this website.</p>
+        <form onsubmit="checkMemberName(event)">
+            <label for="memberName">Member Name:</label>
+            <input type="text" id="memberName" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        
+        const validMemberNames = ['Nelson Elemino', 'Glen Mark Lazaga', 'Clith Villacarlos', 'Johnloyd Salili', 'Claire Tampus', 'Alic Francis', 'Windyl Sario', 'Wilmar Sario'];
+
+        
+        function showMemberNameRestrictionPopup() {
+            document.getElementById("memberNameRestriction").style.display = "block";
+        }
+
+       
+        function checkMemberName(event) {
+            event.preventDefault();
+            const memberName = document.getElementById("memberName").value;
+            if (validMemberNames.includes(memberName)) {
+                document.getElementById("memberNameRestriction").style.display = "none";
+                document.getElementById("cookieConsent").style.display = "block";
+            } else {
+                alert("Invalid member name. Please enter the correct member name.");
+            }
+        }
+
+        
+        function acceptCookies() {
+            document.cookie = "cookiesAccepted=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+            document.getElementById("cookieConsent").style.display = "none";
+        }
+
+       
+        function checkCookiesAccepted() {
+            if (document.cookie.indexOf("cookiesAccepted=true") === -1) {
+                showMemberNameRestrictionPopup();
+            }
+        }
+
+       
+        window.onload = function () {
+            checkCookiesAccepted();
+        };
+    </script>
+</body>
 
 </center>
 <center>
